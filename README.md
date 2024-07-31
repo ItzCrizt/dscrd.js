@@ -1,6 +1,6 @@
-# dscoi.js
+# dscrd.js
 
-A simple and easy to use Discord bot library.
+A updated version of a deleted package \"dscoi.js\" and A simple and easy to use package to create a discord bot.
 
 ## Documentaion
 
@@ -8,23 +8,27 @@ Coming SOON
 
 ## Updates
 
-- 1.2.2-beta - Fixed the slash commands. You can now use slash commands. Because the previous version, the slash commands don't work because it has no REST API
+- 1.2.5 / 1.2.7 - Fixed the slash commands. You can now use slash commands. Because the previous version, the slash commands don't work because it has no REST API
 
-## Errors
+- Updated version of the deleted package "dscoi.js"
 
-- 1.2.1 - The slash commands don't work
+## Deprecate
+
+- 1.2.7-beta - Removed GatewayDispatchEvents
+
+- "dscoi.js" -  Deleted
 
 ## Installation
 
 ```bash
-npm install dscoi.js
+npm install dscrd.js
 ```
 
 ## Usage
 ```js
-const { DscoiClient, Intents, EmbedBuilder } = require('./index');
+const { DscrdClient, Intents, EmbedBuilder } = require('dscrd.js');
 
-const client = new DscoiClient({
+const client = new DscrdClient({
     intents: [
         Intents.FLAGS.GUILDS, 
         Intents.FLAGS.GUILD_MESSAGES
