@@ -100,6 +100,10 @@ client.login('BOT_TOKEN').then(() => {
 
 If there is an issue running this or using the package, you can submit a issue [here](https://github.com/ItzCrizt/dscrd.js/issues)
 
+## Can be used in
+- [✅] Riffy
+- [✅] Moonlink
+
 ## Others
 
 As I said in [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme) I will update this package from time to time *now* because I might not update the __dscrd.js__ because its running the **v13** of discord. I will post the updated version of it soon!
