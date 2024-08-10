@@ -1,6 +1,6 @@
 # dscrd.js
 
-A updated version of a deleted package \"dscoi.js\" and A simple and easy to use package to create a discord bot.
+A beta version 14 of [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme). A package that can make your discord bot creation simple and easy.
 
 ## Documentaion
 
@@ -8,68 +8,98 @@ Coming SOON
 
 ## Updates
 
-- 1.2.5 / 1.2.7 - Fixed the slash commands. You can now use slash commands. Because the previous version, the slash commands don't work because it has no REST API
-
-- Updated version of the deleted package "dscoi.js"
+- Added GatewayDispatchEvents - For bot voice states and more.
+- Added SlashCommandBuilder - Optional, but if you want to make a commands using that. You can now.
+- Added Collection - Store comamnds in the commands folder, or aliases for the commands.
+- Added/Fixed EmbedBuilder - Added more things that embed has.
 
 ## Deprecate
 
-- 1.2.7-beta - Removed GatewayDispatchEvents
-
-- "dscoi.js" -  Deleted
+As of now, NONE
 
 ## Installation
 
 ```bash
-npm install dscrd.js
+npm i dscrd.js-14-beta@latest
 ```
 
 ## Usage
+
 ```js
-const { DscrdClient, Intents, EmbedBuilder } = require('dscrd.js');
+const { 
+    DscrdClient, 
+    Collection, 
+    EmbedBuilder, 
+    GatewayIntentBits,
+    SlashCommandBuilder
+} = require('dscrd.js-14-beta');
+const fs = require('fs');
+const path = require('path');
 
 const client = new DscrdClient({
     intents: [
-        Intents.FLAGS.GUILDS, 
-        Intents.FLAGS.GUILD_MESSAGES
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
     ],
     prefix: '!',
-    clientId: 'YOUR_CLIENT_BOT_ID',
-    // guildId: 'YOUR_GUILD_ID', // Optional if you want to work only in your server
-});
+    clientId: 'BOT_CLIENT_ID'
+})
+
+client.commands = new Collection();
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+}
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client.client.user.tag}!`);
-});
+    console.log('ready')
+})
 
-client.addCommand('ping', (message, args) => {
-    const embed = new EmbedBuilder()
-        .setTitle('Ping')
-        .setDescription('Pong!')
-        .setColor('#00FF00')
-        .build();
-    message.reply({ embeds: [embed] });
-});
+/*******************************************************
+*            COMMANDS FOLDER WITH COMMANDS             *
+*******************************************************/
 
-client.addSlashCommand('hello', {
-    name: 'hello',
-    description: 'Replies with Hello, world!'
+client.on('messageCreate', async (message) => {
+    if (!message.content.startsWith(client.prefix) || message.author.bot) return;
+    const args = message.content.slice(client.prefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
+    const command = client.commands.get(commandName);
+
+    if (!command) return;
+
+    try {
+        await command.execute(message, args);
+    } catch (error) {
+        console.error(error);
+        await message.reply({ content: 'There was an error while executing this command!' });
+    }
+})
+
+client.addSlashCommand('ping', {
+    name: 'ping',
+    description: 'Replies with pong'
 }, async (interaction) => {
-    const embed = new EmbedBuilder()
-        .setTitle('Hello')
-        .setDescription('Hello, world!')
-        .setColor('#00FF00')
-        .build();
-    await interaction.reply({ embeds: [embed] });
-});
+    await interaction.reply('Pong')
+    // If you want to have a slash command or you can use #SlashCommandBuilder instead
+})
 
-client.handleMessages();
-client.handleSlashCommands();
+client.handleMessages(); // Still Optional if you want to put this
+client.handleSlashCommands(); // Still Optional if you want to put this
 
-client.login('YOUR_BOT_TOKEN').then(() => {
-    client.registerSlashCommands();
+client.login('BOT_TOKEN').then(() => {
+    client.registerSlashCommands(); 
+    // If you want to have a slash command or you can use #SlashCommandBuilder instead
 });
 ```
 
+## Info
+
+If there is an issue running this or using the package, you can submit a issue [here](https://github.com/ItzCrizt/dscrd.js/issues)
+
 ## Others
-I will update this npm time to time ( maybe since its my first time to publish one ) This version might be running a v13 of discord. I will post the updated version of it soon! 
+
+As I said in [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme) I will update this package from time to time *now* because I might not update the __dscrd.js__ because its running the **v13** of discord. I will post the updated version of it soon!
