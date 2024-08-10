@@ -13,6 +13,10 @@ Coming SOON
 - Added Collection - Store comamnds in the commands folder, or aliases for the commands.
 - Added/Fixed EmbedBuilder - Added more things that embed has.
 
+## WIP
+
+- [] Builders
+
 ## Deprecate
 
 As of now, NONE
@@ -103,6 +107,7 @@ If there is an issue running this or using the package, you can submit a issue [
 ## Can be used in
 - [✅] Riffy
 - [✅] Moonlink
+and more.
 
 ## Others
 
