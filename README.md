@@ -30,7 +30,7 @@ const {
     EmbedBuilder, 
     GatewayIntentBits,
     SlashCommandBuilder
-} = require('../../index');
+} = require('dscrd.js-14-beta');
 // Removed fs
 const path = require('path')
 
