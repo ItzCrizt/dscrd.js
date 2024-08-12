@@ -8,10 +8,8 @@ Coming SOON
 
 ## Updates
 
-- Added GatewayDispatchEvents - For bot voice states and more.
-- Added SlashCommandBuilder - Optional, but if you want to make a commands using that. You can now.
-- Added Collection - Store comamnds in the commands folder, or aliases for the commands.
-- Added/Fixed EmbedBuilder - Added more things that embed has.
+- Older Version Updates [0.1.1](https://www.npmjs.com/package/dscrd.js-14-beta/v/0.1.1)
+- Added CommandsFolderDir - This makes your commands folder easy without using the command handler.
 
 ## Deprecate
 
@@ -32,9 +30,9 @@ const {
     EmbedBuilder, 
     GatewayIntentBits,
     SlashCommandBuilder
-} = require('dscrd.js-14-beta');
-const fs = require('fs');
-const path = require('path');
+} = require('../../index');
+// Removed fs
+const path = require('path')
 
 const client = new DscrdClient({
     intents: [
@@ -43,68 +41,99 @@ const client = new DscrdClient({
         GatewayIntentBits.MessageContent
     ],
     prefix: '!',
-    clientId: 'BOT_CLIENT_ID'
+    clientId: 'BOT_CLIENT_ID',
+    token: 'BOT_TOKEN'
 })
 
-client.commands = new Collection();
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+// Example 1: Load commands only from the ./commands directory (no subdirectories)
+const absoluteDir = path.resolve(__dirname, './commands');
+client.commandsFolderDir(absoluteDir, false) // ./commands
 
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
-}
+// Example 2: Load commands from the ./commands directory and its subdirectories
+// const absoluteDir = path.resolve(__dirname, './commands');
+// client.commandsFolderDir(absoluteDir, true); // ./commands/info and etc
 
-client.on('ready', () => {
-    console.log('ready')
-})
+client.handleMessage();
+client.handleSlashCommands();
 
-/*******************************************************
-*            COMMANDS FOLDER WITH COMMANDS             *
-*******************************************************/
-
-client.on('messageCreate', async (message) => {
-    if (!message.content.startsWith(client.prefix) || message.author.bot) return;
-    const args = message.content.slice(client.prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
-    const command = client.commands.get(commandName);
-
-    if (!command) return;
-
-    try {
-        await command.execute(message, args);
-    } catch (error) {
-        console.error(error);
-        await message.reply({ content: 'There was an error while executing this command!' });
-    }
-})
-
-client.addSlashCommand('ping', {
-    name: 'ping',
-    description: 'Replies with pong'
-}, async (interaction) => {
-    await interaction.reply('Pong')
-    // If you want to have a slash command or you can use #SlashCommandBuilder instead
-})
-
-client.handleMessages(); // Still Optional if you want to put this
-client.handleSlashCommands(); // Still Optional if you want to put this
-
-client.login('BOT_TOKEN').then(() => {
-    client.registerSlashCommands(); 
-    // If you want to have a slash command or you can use #SlashCommandBuilder instead
-});
+client.login(client.token)
+    .then(() => client.registerSlashCommands())
+    .catch(console.error);
 ```
 
 ## Info
 
 If there is an issue running this or using the package, you can submit a issue [here](https://github.com/ItzCrizt/dscrd.js/issues)
 
-## Can be used in
-- [✅] Riffy
-- [✅] Moonlink
-and more.
+## Others
+
+As I said in [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme) I will update this package from time to time *now* because I might not update the __dscrd.js__ because its running the **v13** of discord. I will post the updated version of this package soon!# dscrd.js
+
+A beta version 14 of [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme). A package that can make your discord bot creation simple and easy.
+
+## Documentaion
+
+Coming SOON
+
+## Updates
+
+- Older Version Updates [0.1.1](https://www.npmjs.com/package/dscrd.js-14-beta/v/0.1.1)
+- Added CommandsFolderDir - This makes your commands folder easy without using the command handler.
+
+## Deprecate
+
+As of now, NONE
+
+## Installation
+
+```bash
+npm i dscrd.js-14-beta@latest
+```
+
+## Usage
+
+```js
+const { 
+    DscrdClient, 
+    Collection, 
+    EmbedBuilder, 
+    GatewayIntentBits,
+    SlashCommandBuilder
+} = require('../../index');
+// Removed fs
+const path = require('path')
+
+const client = new DscrdClient({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ],
+    prefix: '!',
+    clientId: 'BOT_CLIENT_ID',
+    token: 'BOT_TOKEN'
+})
+
+// Example 1: Load commands only from the ./commands directory (no subdirectories)
+const absoluteDir = path.resolve(__dirname, './commands');
+client.commandsFolderDir(absoluteDir, false) // ./commands
+
+// Example 2: Load commands from the ./commands directory and its subdirectories
+// const absoluteDir = path.resolve(__dirname, './commands');
+// client.commandsFolderDir(absoluteDir, true); // ./commands/info and etc
+
+client.handleMessage();
+client.handleSlashCommands();
+
+client.login(client.token)
+    .then(() => client.registerSlashCommands())
+    .catch(console.error);
+```
+
+## Info
+
+If there is an issue running this or using the package, you can submit a issue [here](https://github.com/ItzCrizt/dscrd.js/issues)
 
 ## Others
 
-As I said in [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme) I will update this package from time to time *now* because I might not update the __dscrd.js__ because its running the **v13** of discord. I will post the updated version of it soon!
+As I said in [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme) I will update this package from time to time *now* because I might not update the __dscrd.js__ because its running the **v13** of discord. I will post the updated version of this package soon!
