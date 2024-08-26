@@ -1,0 +1,30 @@
+{
+  "name": "dscrd.js-14-beta",
+  "version": "0.1.1",
+  "description": "A beta version of dscrd.js@14, A simple and easy to use package to create a discord bot.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItzCrizt/dscrd.js.git#v14"
+  },
+  "keywords": [
+    "discord",
+    "easy",
+    "bot",
+    "library"
+  ],
+  "author": "ItzCrizt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ItzCrizt/dscrd.js/issues"
+  },
+  "homepage": "https://github.com/ItzCrizt/dscrd.js/tree/v14#readme",
+  "dependencies": {
+    "@discordjs/rest": "^2.3.0",
+    "discord-api-types": "^0.37.93",
+    "discord.js": "^14.15.3"
+  }
+}

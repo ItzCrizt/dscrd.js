@@ -1,6 +1,6 @@
 # dscrd.js
 
-A updated version of a deleted package \"dscoi.js\" and A simple and easy to use package to create a discord bot.
+A beta version 14 of [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme). A package that can make your discord bot creation simple and easy.
 
 ## Documentaion
 
@@ -8,68 +8,132 @@ Coming SOON
 
 ## Updates
 
-- 1.2.5 / 1.2.7 - Fixed the slash commands. You can now use slash commands. Because the previous version, the slash commands don't work because it has no REST API
-
-- Updated version of the deleted package "dscoi.js"
+- Older Version Updates [0.1.1](https://www.npmjs.com/package/dscrd.js-14-beta/v/0.1.1)
+- Added CommandsFolderDir - This makes your commands folder easy without using the command handler.
 
 ## Deprecate
 
-- 1.2.7-beta - Removed GatewayDispatchEvents
-
-- "dscoi.js" -  Deleted
+As of now, NONE
 
 ## Installation
 
 ```bash
-npm install dscrd.js
+npm i dscrd.js-14-beta@latest
 ```
 
 ## Usage
+
 ```js
-const { DscrdClient, Intents, EmbedBuilder } = require('dscrd.js');
+const { 
+    DscrdClient, 
+    Collection, 
+    EmbedBuilder, 
+    GatewayIntentBits,
+    SlashCommandBuilder
+} = require('dscrd.js-14-beta');
+// Removed fs
+const path = require('path')
 
 const client = new DscrdClient({
     intents: [
-        Intents.FLAGS.GUILDS, 
-        Intents.FLAGS.GUILD_MESSAGES
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
     ],
     prefix: '!',
-    clientId: 'YOUR_CLIENT_BOT_ID',
-    // guildId: 'YOUR_GUILD_ID', // Optional if you want to work only in your server
-});
+    clientId: 'BOT_CLIENT_ID',
+    token: 'BOT_TOKEN'
+})
 
-client.on('ready', () => {
-    console.log(`Logged in as ${client.client.user.tag}!`);
-});
+// Example 1: Load commands only from the ./commands directory (no subdirectories)
+const absoluteDir = path.resolve(__dirname, './commands');
+client.commandsFolderDir(absoluteDir, false) // ./commands
 
-client.addCommand('ping', (message, args) => {
-    const embed = new EmbedBuilder()
-        .setTitle('Ping')
-        .setDescription('Pong!')
-        .setColor('#00FF00')
-        .build();
-    message.reply({ embeds: [embed] });
-});
+// Example 2: Load commands from the ./commands directory and its subdirectories
+// const absoluteDir = path.resolve(__dirname, './commands');
+// client.commandsFolderDir(absoluteDir, true); // ./commands/info and etc
 
-client.addSlashCommand('hello', {
-    name: 'hello',
-    description: 'Replies with Hello, world!'
-}, async (interaction) => {
-    const embed = new EmbedBuilder()
-        .setTitle('Hello')
-        .setDescription('Hello, world!')
-        .setColor('#00FF00')
-        .build();
-    await interaction.reply({ embeds: [embed] });
-});
-
-client.handleMessages();
+client.handleMessage();
 client.handleSlashCommands();
 
-client.login('YOUR_BOT_TOKEN').then(() => {
-    client.registerSlashCommands();
-});
+client.login(client.token)
+    .then(() => client.registerSlashCommands())
+    .catch(console.error);
 ```
 
+## Info
+
+If there is an issue running this or using the package, you can submit a issue [here](https://github.com/ItzCrizt/dscrd.js/issues)
+
 ## Others
-I will update this npm time to time ( maybe since its my first time to publish one ) This version might be running a v13 of discord. I will post the updated version of it soon! 
+
+As I said in [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme) I will update this package from time to time *now* because I might not update the __dscrd.js__ because its running the **v13** of discord. I will post the updated version of this package soon!# dscrd.js
+
+A beta version 14 of [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme). A package that can make your discord bot creation simple and easy.
+
+## Documentaion
+
+Coming SOON
+
+## Updates
+
+- Older Version Updates [0.1.1](https://www.npmjs.com/package/dscrd.js-14-beta/v/0.1.1)
+- Added CommandsFolderDir - This makes your commands folder easy without using the command handler.
+
+## Deprecate
+
+As of now, NONE
+
+## Installation
+
+```bash
+npm i dscrd.js-14-beta@latest
+```
+
+## Usage
+
+```js
+const { 
+    DscrdClient, 
+    Collection, 
+    EmbedBuilder, 
+    GatewayIntentBits,
+    SlashCommandBuilder
+} = require('../../index');
+// Removed fs
+const path = require('path')
+
+const client = new DscrdClient({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ],
+    prefix: '!',
+    clientId: 'BOT_CLIENT_ID',
+    token: 'BOT_TOKEN'
+})
+
+// Example 1: Load commands only from the ./commands directory (no subdirectories)
+const absoluteDir = path.resolve(__dirname, './commands');
+client.commandsFolderDir(absoluteDir, false) // ./commands
+
+// Example 2: Load commands from the ./commands directory and its subdirectories
+// const absoluteDir = path.resolve(__dirname, './commands');
+// client.commandsFolderDir(absoluteDir, true); // ./commands/info and etc
+
+client.handleMessage();
+client.handleSlashCommands();
+
+client.login(client.token)
+    .then(() => client.registerSlashCommands())
+    .catch(console.error);
+```
+
+## Info
+
+If there is an issue running this or using the package, you can submit a issue [here](https://github.com/ItzCrizt/dscrd.js/issues)
+
+## Others
+
+As I said in [dscrd.js](https://www.npmjs.com/package/dscrd.js?activeTab=readme) I will update this package from time to time *now* because I might not update the __dscrd.js__ because its running the **v13** of discord. I will post the updated version of this package soon!
